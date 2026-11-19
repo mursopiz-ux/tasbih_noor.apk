@@ -161,7 +161,7 @@ fun HistoryScreen(
                     IconButton(
                         onClick = {
                             val summaryText = buildString {
-                                appendLine("✨ TASBIH NOOR V2.0 — Ringkasan Dzikir ✨")
+                                appendLine("✨ TASBIH NOOR V2.01 — Ringkasan Dzikir ✨")
                                 appendLine("Hari Ini: ${stats.todayDhikr}")
                                 appendLine("Minggu Ini: ${stats.weeklyDhikr}")
                                 appendLine("Bulan Ini: ${stats.monthlyDhikr}")

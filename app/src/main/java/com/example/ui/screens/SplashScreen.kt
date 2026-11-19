@@ -113,7 +113,7 @@ fun SplashLoadingScreen(
             Spacer(modifier = Modifier.height(6.dp))
 
             Text(
-                text = "Versi 2.0",
+                text = "Versi 2.01",
                 style = MaterialTheme.typography.labelMedium,
                 color = NoorSecondaryText
             )

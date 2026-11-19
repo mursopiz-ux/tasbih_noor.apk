@@ -1,11 +1,13 @@
 package com.example
 
+import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.room.Room
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteOpenHelper
@@ -51,6 +53,8 @@ class ExampleRobolectricTest {
         assertEquals("TASBIH NOOR", context.getString(R.string.app_name))
         assertEquals("A Peaceful Digital Dhikr Experience.", context.getString(R.string.app_tagline))
         assertEquals("Premium Islamic Digital Tasbih and Daily Wird Companion.", context.getString(R.string.app_description))
+        assertEquals("2.01", BuildConfig.VERSION_NAME)
+        assertEquals(3, BuildConfig.VERSION_CODE)
     }
 
     @Test
@@ -260,5 +264,20 @@ class ExampleRobolectricTest {
         composeTestRule.onNodeWithTag("nav_item_settings").performClick()
         composeTestRule.waitForIdle()
         composeTestRule.onNodeWithTag("settings_screen").assertIsDisplayed()
+
+        // Scroll to Support Developer section at the end of Settings
+        composeTestRule.onNodeWithTag("about_app_card").performScrollTo()
+        composeTestRule.onNodeWithText("Versi 2.01").assertIsDisplayed()
+
+        composeTestRule.onNodeWithTag("support_developer_card").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithTag("qris_support_image").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("6880857990").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("a.n. Mursopi zaini").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithTag("copy_bank_account_button").performScrollTo().performClick()
+        composeTestRule.waitForIdle()
+
+        val clipboard = ApplicationProvider.getApplicationContext<Context>()
+            .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        assertEquals("6880857990", clipboard.primaryClip?.getItemAt(0)?.text?.toString())
     }
 }
